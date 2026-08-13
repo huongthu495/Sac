@@ -5,17 +5,8 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,9 +28,16 @@ jobs:
         working-directory: CODE-main/my-app
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./CODE-main/my-app/dist/my-app/browser
-          cname: yourdomain.com  # Uncomment and update if using custom domain
+      - name: Copy build to docs folder
+        run: |
+          rm -rf docs
+          mkdir -p docs
+          cp -r CODE-main/my-app/dist/my-app/browser/* docs/
+
+      - name: Commit and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/
+          git commit -m "Deploy to GitHub Pages" || echo "No changes to commit"
+          git push
