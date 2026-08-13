@@ -1,0 +1,64 @@
+<section class="wishlist-container">
+  <div class="wishlist-header">
+    <h2>Sản Phẩm Yêu Thích</h2>
+    <p class="wishlist-subtitle">Các sản phẩm bạn đã lưu</p>
+  </div>
+
+  <div class="wishlist-actions" *ngIf="wishlistItems.length > 0">
+    <button class="btn-clear" (click)="clearWishlist()">
+      Xóa Tất Cả
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <p>Đang tải sản phẩm yêu thích...</p>
+  </div>
+
+  <!-- Wishlist Grid -->
+  <div *ngIf="!loading && wishlistItems.length > 0" class="wishlist-grid">
+    <div
+      *ngFor="let item of wishlistItems"
+      class="wishlist-item"
+      [routerLink]="getProductId(item) ? ['/product', getProductId(item)] : null">
+      <div class="item-image">
+           <img [src]="item.productImage || '/assets/Logo.png'" 
+             [alt]="item.productName"
+             onerror="this.src='/assets/Logo.png'">
+      </div>
+      
+      <div class="item-content">
+        <h3 class="item-name">{{ item.productName }}</h3>
+        
+        <div class="item-details">
+          <div class="item-sku" *ngIf="item.productSku">
+            <span class="label">SKU:</span>
+            <span class="value">{{ item.productSku }}</span>
+          </div>
+          <div class="item-added-date">
+            <span class="label">Thêm vào:</span>
+            <span class="value">{{ item.createdAt | date: 'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <div class="item-price" *ngIf="item.productPrice">
+          <span class="price-label">Giá:</span>
+          <span class="price-value">{{ item.productPrice | number: '1.0-0' }}đ</span>
+        </div>
+      </div>
+
+      <div class="item-actions">
+        <button class="btn-remove" (click)="$event.stopPropagation(); removeFromWishlist(item._id)">
+          ✕
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && wishlistItems.length === 0" class="empty-state">
+    <div class="empty-icon">❤️</div>
+    <p>Danh sách yêu thích trống</p>
+    <small>Hãy thêm những sản phẩm bạn yêu thích vào danh sách này!</small>
+  </div>
+</section>

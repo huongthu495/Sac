@@ -1,0 +1,54 @@
+<div class="modal fade show d-block" *ngIf="isVisible" tabindex="-1" role="dialog" style="background: rgba(0, 0, 0, 0.5)">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Thanh toán</h5>
+				<button type="button" class="btn-close" aria-label="Close" (click)="closeModal()">X</button>
+			</div>
+
+			<div class="modal-body">
+				<ul class="nav nav-tabs justify-content-center">
+					<li class="nav-item">
+						<a class="nav-link" [class.active]="activeTab === 'momo'" (click)="switchTab('momo')" href="javascript:void(0)">Momo</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" [class.active]="activeTab === 'internet_banking'" (click)="switchTab('internet_banking')" href="javascript:void(0)">Internet Banking</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" [class.active]="activeTab === 'zalopage'" (click)="switchTab('zalopage')" href="javascript:void(0)">ZaloPay</a>
+					</li>
+				</ul>
+
+				<div class="tab-content mt-4">
+					<div *ngIf="activeTab === 'momo'" class="qr-wrap">
+						<div class="qr-box">
+							<img src="assets/momo.jpg" alt="QR Code Momo" />
+						</div>
+					</div>
+
+					<div *ngIf="activeTab === 'internet_banking'" class="qr-wrap">
+						<div class="qr-box">
+							<img src="assets/Sacombank.jpg" alt="Sacombank QR" />
+						</div>
+					</div>
+
+				  <div *ngIf="activeTab === 'zalopage'" class="qr-wrap">
+				    <div class="qr-box">
+				      <img src="assets/zalopay.jpg" alt="ZaloPay QR" />
+				    </div>
+				  </div>
+				</div>
+			</div>
+
+				<div class="modal-footer">
+					<div class="qr-left">
+						<span class="qr-countdown">{{ countdown }} giây</span>
+					</div>
+					<div class="qr-actions">
+						<button class="btn btn-check" (click)="confirmPayment()" [disabled]="confirmed">Kiểm tra</button>
+						<button class="btn btn-cancel" (click)="closeModal()">Hủy</button>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

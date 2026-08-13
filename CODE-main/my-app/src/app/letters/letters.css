@@ -1,0 +1,85 @@
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+
+body, .letters-story, .story-section, .story-text, .story-section * {
+	font-family: 'Montserrat', Arial, sans-serif;
+	box-sizing: border-box;
+}
+
+.letters-story {
+	max-width: 1200px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 60px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.story-section {
+	display: flex;
+	align-items: center;
+	gap: 80px;
+	margin-bottom: 120px;
+}
+.story-section.reverse {
+	flex-direction: row-reverse;
+}
+.story-text {
+	flex: 1;
+	color: #40513b;
+	min-width: 280px;
+}
+.story-text h2 {
+	font-size: 30px;
+	font-weight: 700;
+	margin-bottom: 25px;
+	color: #40513b;
+	font-family: "Montserrat", sans-serif;
+}
+.story-text p {
+	font-size: 15px;
+	line-height: 1.8;
+	margin-bottom: 20px;
+	text-align: justify;
+}
+.story-image {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 340px;
+	/* Đảm bảo vùng ảnh luôn giữ chỗ khi chưa load */
+}
+.story-image img {
+	width: 100%;
+	max-width: 700px;
+	max-height: 900px;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+	object-fit: cover;
+	display: block;
+}
+
+/* Scroll animation hiệu ứng giống about-us */
+.observed.animate-left,
+.observed.animate-right,
+.observed.animate-up {
+	opacity: 0;
+	transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease;
+	will-change: transform, opacity;
+}
+.animate-left { transform: translateX(-48px); }
+.animate-right { transform: translateX(48px); }
+.animate-up { transform: translateY(16px); }
+.show {
+	opacity: 1 !important;
+	transform: translate(0,0) !important;
+}
+@media (max-width: 900px) {
+	.story-section {
+		flex-direction: column !important;
+		gap: 32px;
+		margin-bottom: 60px;
+	}
+}

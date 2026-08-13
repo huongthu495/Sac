@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="filter-bar">
+    <div class="filter-item">
+      Bộ lọc
+    </div>
+    <div class="filter-highlight">
+      <select (change)="sortProducts($event)">
+        <option value="featured">✓ Sản phẩm nổi bật</option>
+        <option value="priceLow">Giá: Tăng dần</option>
+        <option value="priceHigh">Giá: Giảm dần</option>
+        <option value="nameAZ">Tên: A-Z</option>
+        <option value="nameZA">Tên: Z-A</option>
+        <option value="oldest">Cũ nhất</option>
+        <option value="newest">Mới nhất</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="product-grid">
+
+    <div class="product-card" *ngFor="let product of products" [routerLink]="['/product', product._id]">
+      <div class="image-wrapper">
+        <img class="img1" [src]="getImageSrc(product, 0)">
+        <img class="img2" [src]="getImageSrc(product, 1)">
+      </div>
+      <h3>{{product.product_name}}</h3>
+      <p class="price">{{product.unit_price | number}}đ</p>
+    </div>
+
+  </div>
+
+</div>

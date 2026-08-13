@@ -1,0 +1,247 @@
+/* ===== SECTION CHÍNH ===== */
+.policy-section {
+  padding: 80px 20px;
+  background: #ebe1d8; /* Nền beige trầm của Sắc */
+  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  color: #40513b;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ===== TIÊU ĐỀ TRANG ===== */
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  animation: fadeInDown 0.8s ease;
+}
+
+.section-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #40513b; /* Xanh lá đậm */
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  position: relative;
+  display: inline-block;
+}
+
+/* Thanh gạch đỏ mận dưới tiêu đề */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 70px;
+  height: 4px;
+  background: #a94053; /* Đỏ mận từ logo */
+  margin: 15px auto 0;
+  border-radius: 2px;
+}
+
+.section-description {
+  font-size: 18px;
+  color: #6e5034; /* Nâu đất */
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+.section-description strong {
+  color: #a94053;
+  font-weight: 600;
+}
+
+/* ===== ACCORDION WRAPPER ===== */
+.accordion-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== Từng mục Accordion ===== */
+.accordion-item {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(110, 80, 52, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.accordion-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(64, 81, 59, 0.1);
+}
+
+.accordion-item.expanded {
+  border-color: #a94053; /* Đổi viền sang đỏ mận khi mở */
+  box-shadow: 0 10px 30px rgba(169, 64, 83, 0.12);
+}
+
+/* ===== HEADER CỦA MỤC ===== */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  cursor: pointer;
+  background: white;
+  transition: background 0.3s ease;
+}
+
+.accordion-item.expanded .accordion-header {
+  background: #fdfaf8; /* Đổi nền nhẹ khi mở */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+/* ===== ICON MÔ TẢ ===== */
+.policy-icon {
+  width: 86px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4eee8;
+  border-radius: 14px;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+}
+
+.policy-icon img {
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  display: block;
+  transform: scale(1.08);
+  /* Filter để ảnh icon màu xám đậm #333 */
+  filter: grayscale(1) brightness(0.2);
+}
+
+.accordion-item.expanded .policy-icon {
+  background: #a94053; /* Icon chuyển nền đỏ mận khi mở */
+  transform: rotate(-5deg);
+}
+
+.accordion-item.expanded .policy-icon img {
+  filter: brightness(0) invert(1); /* Icon chuyển trắng khi mở */
+}
+
+.accordion-item:nth-child(1) .policy-icon img {
+  width: 56px;
+  height: 56px;
+}
+
+/* ===== TÊN CHÍNH SÁCH ===== */
+.policy-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #40513b;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.accordion-item.expanded .policy-title {
+  color: #a94053; /* Tiêu đề chuyển đỏ mận khi mở */
+}
+
+/* ===== NÚT MŨI TÊN ===== */
+.accordion-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #f4eee8;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6e5034;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.accordion-toggle.rotate {
+  background: #a94053;
+  color: white;
+  transform: rotate(180deg);
+}
+
+/* ===== NỘI DUNG CHI TIẾT ===== */
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  background: white;
+}
+
+.accordion-content.show {
+  max-height: 2000px; /* Tùy độ dài nội dung */
+}
+
+.accordion-body {
+  padding: 0 35px 35px 35px;
+  color: #40513b;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* ===== STYLING NỘI DUNG BÊN TRONG (innerHTML) ===== */
+::ng-deep .accordion-body h4 {
+  color: #6e5034 !important;
+  font-size: 19px !important;
+  margin: 25px 0 10px !important;
+  border-left: 4px solid #a94053 !important;
+  padding-left: 15px !important;
+  font-weight: 700 !important;
+}
+
+::ng-deep .accordion-body p {
+  margin-bottom: 15px !important;
+}
+
+::ng-deep .accordion-body strong {
+  color: #a94053 !important;
+}
+
+/* Bảng biểu nếu có */
+::ng-deep .shipping-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 20px 0 !important;
+}
+
+::ng-deep .shipping-table th {
+  background: #40513b !important;
+  color: white !important;
+  padding: 12px !important;
+  text-align: left !important;
+}
+
+::ng-deep .shipping-table td {
+  padding: 12px !important;
+  border-bottom: 1px solid #f4eee8 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title { font-size: 32px; }
+  .section-description { font-size: 16px; }
+  .accordion-header { padding: 18px 20px; }
+  .header-left { gap: 16px; }
+  .policy-icon { width: 74px; height: 74px; border-radius: 12px; }
+  .policy-icon img { width: 60px; height: 60px; transform: scale(1.08); }
+  .policy-title { font-size: 18px; }
+  .accordion-body { padding: 0 20px 25px 20px; }
+}
+
+/* Animation */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

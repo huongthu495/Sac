@@ -1,0 +1,30 @@
+<section class="vision-section">
+  <!-- Orbiting gallery -->
+  <div class="vision-gallery" #gallery>
+    <div class="vision-card" *ngFor="let card of allCards">
+      <img [src]="card.image" [alt]="card.alt" />
+    </div>
+  </div>
+
+  <!-- Text at bottom, clear of images -->
+  <div class="vision-content">
+    <div class="vision-accent-line"></div>
+
+    <h2 class="vision-quote">
+      Kết tinh từ <span class="highlight">linh hồn cha ông</span> qua bốn nghìn năm văn hiến,
+      Việt Phục là dòng chảy di sản chưa bao giờ ngừng
+      <span class="highlight">rực rỡ</span> giữa những thăng trầm lịch sử.
+    </h2>
+
+    <p class="vision-subquote">
+      Chúng ta không chỉ mặc một bộ trang phục — chúng ta đang khoác lên mình
+      cả một nền văn minh với niềm tự hào về một bản sắc bất diệt.
+    </p>
+
+    <div class="vision-star">
+      <svg width="18" height="18" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="20,4 24.045,15.09 36,15.09 26.477,22.18 30.522,33.27 20,26.18 9.478,33.27 13.523,22.18 4,15.09 15.955,15.09" fill="#d80027"/>
+      </svg>
+    </div>
+  </div>
+</section>

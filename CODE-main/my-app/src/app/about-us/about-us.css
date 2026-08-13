@@ -1,0 +1,404 @@
+/* ============================= */
+/* HERO SECTION */
+/* ============================= */
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-color: #3a6b3a;
+  background-image: url('/assets/aboutus_bg.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.55) 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.hero-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(72px, 14vw, 140px);
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  letter-spacing: 2px;
+  line-height: 1;
+  margin: 0;
+}
+
+.hero-sub {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(14px, 2.5vw, 22px);
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 8px;
+  margin: 0;
+}
+
+.hero-btn {
+  margin-top: 20px;
+  padding: 14px 36px;
+  border: 2px solid #fff;
+  background: transparent;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: #fff;
+  color: #2e5e2e;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ============================= */
+/* CONTENT SECTION */
+/* ============================= */
+.about-story {
+  max-width: 1200px;
+  width: 100%; /* Đảm bảo co giãn tốt trên màn hình nhỏ */
+  margin: auto;
+  padding: 60px 20px;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Layout section */
+.story-section {
+  display: flex;
+  align-items: center;
+  gap: 80px; /* Tăng khoảng cách để giao diện thoáng hơn */
+  margin-bottom: 120px;
+}
+
+/* section so le - Sửa lại để hiển thị đúng hiệu ứng đảo bên */
+.story-section.reverse {
+  flex-direction: row-reverse;
+}
+
+/* text */
+.story-text {
+  flex: 1;
+  color: #40513b;
+}
+
+.story-text h2 {
+  font-size: 30px; /* Tăng nhẹ tiêu đề để cân đối với nội dung mới */
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #40513b;
+  font-family: "Montserrat", sans-serif; /* Font chữ sang trọng cho tiêu đề */
+}
+
+.story-text p {
+  font-size: 15px; /* Tăng từ 13px lên 18px để dễ đọc hơn */
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+/* image */
+.story-image {
+  flex: 1;
+}
+
+.story-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Thêm bóng mờ cho ảnh nổi bật */
+}
+
+/* mission */
+.story-mission {
+  text-align: center;
+  max-width: 900px;
+  margin: 80px auto 0;
+  color: #40513b;
+}
+
+.story-mission h2 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
+.story-mission p {
+  font-size: 15px; /* Đồng bộ kích thước chữ nội dung */
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.mission-image {
+  margin-top: 50px;
+}
+
+.mission-image img {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+/* ============================= */
+/* SCROLL ANIMATION */
+/* ============================= */
+
+/* opacity:0 only applied AFTER JS attaches the observer — prevents blank content on SSR */
+.observed.animate-left,
+.observed.animate-right,
+.observed.animate-up {
+  opacity: 0;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease;
+  will-change: transform, opacity;
+}
+
+.observed.animate-left { transform: translateX(-48px); }
+.observed.animate-right { transform: translateX(48px); }
+.observed.animate-up { transform: translateY(48px); }
+
+.show {
+  opacity: 1 !important;
+  transform: translate(0,0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .observed.animate-left,
+  .observed.animate-right,
+  .observed.animate-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================= */
+/* BLOG SECTION */
+/* ============================= */
+.about-blog-section {
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #fdf6f0 0%, #fff5ed 100%);
+  text-align: center;
+}
+
+.blog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #8b2f3f;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.blog-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 48px;
+  line-height: 1.6;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.blog-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.blog-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.blog-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.blog-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-image img {
+  transform: scale(1.05);
+}
+
+.blog-content {
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-item-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.blog-excerpt {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0 0 16px 0;
+  flex-grow: 1;
+  text-align: left;
+}
+
+.blog-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: #999;
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.blog-date {
+  display: flex;
+  align-items: center;
+}
+
+.blog-author {
+  display: flex;
+  align-items: center;
+}
+
+.blog-link {
+  color: #8b2f3f;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: left;
+}
+
+.blog-link:hover {
+  color: #d92f3d;
+  transform: translateX(4px);
+}
+
+.no-blog {
+  color: #999;
+  font-size: 1.1rem;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+}
+
+.view-all-blogs {
+  margin-top: 40px;
+}
+
+.btn-view-all {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #8b2f3f;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid #8b2f3f;
+}
+
+.btn-view-all:hover {
+  background: transparent;
+  color: #8b2f3f;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .about-blog-section {
+    padding: 60px 20px;
+  }
+
+  .blog-title {
+    font-size: 1.8rem;
+  }
+
+  .blog-subtitle {
+    font-size: 1rem;
+  }
+
+  .blog-grid {
+    gap: 24px;
+  }
+
+  .blog-item-title {
+    font-size: 1.1rem;
+  }
+}

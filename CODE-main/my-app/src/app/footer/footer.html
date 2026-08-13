@@ -1,0 +1,111 @@
+<footer class="footer">
+  <!-- Service Guarantees Section -->
+  <div class="footer-guarantees">
+    <div class="guarantee-container">
+      <div class="guarantee-item">
+        <div class="guarantee-icon">
+          <img src="assets/support.png" alt="Hỗ trợ 24h" />
+        </div>
+        <div class="guarantee-content">
+          <h4>Hỗ trợ 24h</h4>
+          <p>Tư vấn mọi lúc, mọi nơi</p>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">
+          <img src="assets/protect.png" alt="Thanh toán an toàn" />
+        </div>
+        <div class="guarantee-content">
+          <h4>Thanh toán an toàn</h4>
+          <p>Bảo mật tuyệt đối - An toàn sử dụng</p>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">
+          <img src="assets/exchange_dark.png" alt="Đổi trả linh hoạt" />
+        </div>
+        <div class="guarantee-content">
+          <h4>Đổi trả linh hoạt</h4>
+          <p>Hoàn tiền cho sản phẩm hỏng</p>
+        </div>
+      </div>
+
+      <div class="guarantee-item">
+        <div class="guarantee-icon">
+          <img src="assets/logistic.png" alt="Miễn phí giao hàng" />
+        </div>
+        <div class="guarantee-content">
+          <h4>Miễn phí giao hàng</h4>
+          <p>Áp dụng cho đơn từ 200.000₫</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer Content -->
+  <div class="footer-content">
+    <div class="footer-grid">
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <a routerLink="/">
+            <img src="assets/Logo.png" alt="SẮc">
+          </a>
+        </div>
+        <p class="brand-description">Nơi lưu giữ và phát huy vẻ đẹp của văn hóa truyền thống Việt Nam</p>
+      </div>
+
+      <!-- About Section -->
+      <div class="footer-section">
+        <h5>VỀ CHÚNG TÔI</h5>
+        <ul class="footer-links">
+          <li><a href="/" (click)="$event.preventDefault(); openPage('/')">Giới thiệu</a></li>
+          <li><a href="/aboutus" (click)="$event.preventDefault(); openPage('/aboutus')">Câu chuyện chúng tôi</a></li>
+          <li><a href="/contact" (click)="$event.preventDefault(); openPage('/contact')">Liên hệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Support Section -->
+      <div class="footer-section">
+        <h5>HỖ TRỢ KHÁCH HÀNG</h5>
+        <ul class="footer-links">
+          <li><a href="/how-to-buy?open=faq" (click)="$event.preventDefault(); openSupportTab('faq')">Câu hỏi thường gặp</a></li>
+          <li><a href="/how-to-buy?open=order" (click)="$event.preventDefault(); openSupportTab('order')">Hướng dẫn đặt hàng</a></li>
+          <li><a href="/how-to-buy?open=return" (click)="$event.preventDefault(); openSupportTab('return')">Hướng dẫn đổi trả</a></li>
+        </ul>
+      </div>
+
+      <!-- Policy Section -->
+      <div class="footer-section">
+        <h5>CHÍNH SÁCH</h5>
+        <ul class="footer-links">
+          <li><a href="/policy" (click)="$event.preventDefault(); openPolicyPage()">Đổi trả</a></li>
+          <li><a href="/policy" (click)="$event.preventDefault(); openPolicyPage()">Bảo mật</a></li>
+          <li><a href="/policy" (click)="$event.preventDefault(); openPolicyPage()">Điều khoản</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Section -->
+      <div class="footer-section">
+        <h5>LIÊN HỆ</h5>
+        <div class="contact-info">
+          <div class="contact-item">
+            <img src="assets/phone.png" alt="Phone" class="contact-icon">
+            <a href="tel:0812059720">0812 059 720</a>
+          </div>
+          <div class="contact-item">
+            <img src="assets/email.png" alt="Email" class="contact-icon">
+            <a href="mailto:sac.support@gmail.com">sac.support@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>&copy; 2026 SẮC - Gói trọn bản sắc, dệt hồn di sản. Tất cả quyền được bảo lưu.</p>
+  </div>
+</footer>

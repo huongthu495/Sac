@@ -1,0 +1,170 @@
+<div class="product-detail-page" *ngIf="product">
+
+  <!-- Main Product Section -->
+  <div class="product-container">
+    <div class="product-gallery">
+      <div class="main-image-wrapper">
+        <img class="main-image" [src]="getImageSrc(selectedImage || product.images?.[0])" alt="Ảnh sản phẩm">
+        <div *ngIf="product?.stocked_quantity === 0" class="sold-out-overlay">
+          Hết Hàng
+        </div>
+      </div>
+      <div class="thumbnail-list">
+        <div *ngFor="let img of product.images; let i = index"
+             class="thumb-item"
+             [class.selected]="selectedImage === img || (!selectedImage && i === 0)"
+             (click)="selectedImage = img">
+          <img [src]="getImageSrc(img)" alt="Ảnh phụ">
+        </div>
+      </div>
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-title">{{ product?.product_name }}</h1>
+      <div class="product-code">Mã SP: {{ product?._id }}</div>
+      <div class="product-price">{{ product?.unit_price | number }}₫</div>
+
+      <div class="product-option" *ngIf="product?.color">
+        <span class="option-label">Màu sắc:</span>
+        <span class="option-value">{{ product?.color }}</span>
+      </div>
+
+      <div class="product-option" *ngIf="(product?.sizes?.length || 0) > 0">
+        <span class="option-label">Kích thước:</span>
+        <div class="size-options">
+          <ng-container *ngIf="(product?.sizes?.length || 0) > 0">
+            <button *ngFor="let size of product?.sizes"
+                    [class.selected]="selectedSize === size.size"
+                    [disabled]="(size['quantity'] || size['stock'] || 0) === 0"
+                    (click)="selectSize(size.size)">
+              {{ size.size }}
+            </button>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="qty-row">
+        <span class="option-label">Số lượng:</span>
+        <div class="quantity-selector-product">
+          <button class="qty-btn-product decrease-btn" (click)="decrease()">
+            <i class="qty-icon">−</i>
+          </button>
+          <div class="qty-input-wrapper-product">
+            <span class="qty-value-product">{{ quantity }}</span>
+          </div>
+          <button class="qty-btn-product increase-btn" (click)="increase()">
+            <i class="qty-icon">+</i>
+          </button>
+        </div>
+      </div>
+
+      <div class="product-actions">
+        <button class="btn-cart" (click)="addToCart()">Thêm vào giỏ hàng</button>
+        <button class="btn-buy" (click)="buyNow()">Mua ngay</button>
+        <button class="btn-wishlist" [class.active]="isWishlisted" (click)="toggleWishlist()">
+          <svg *ngIf="!isWishlisted" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <svg *ngIf="isWishlisted" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Product Info Section - Full Width Horizontal -->
+  <div class="info-section">
+    <div class="info-section-header">
+      <h2>Thông tin sản phẩm</h2>
+    </div>
+    <div class="info-section-grid">
+      <div class="info-col info-col-desc">
+        <div class="desc-content" *ngIf="product?.description; else noDesc">{{ product?.description }}</div>
+        <ng-template #noDesc><span class="no-desc">Chưa có mô tả.</span></ng-template>
+
+        <div class="desc-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">✦</span>
+            <span>Thiết kế tôn dáng, tạo vế thướt tha</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">✦</span>
+            <span>Phù hợp lễ hội, sự kiện, đám cưới</span>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">✦</span>
+            <span>Thủ công tỉ mỉ, giới hạn số lượng</span>
+          </div>
+        </div>
+
+        <blockquote class="desc-quote">
+          <p>“Áo dài không chỉ là trang phục — đó là câu chuyện của truyền thống, của vẻ đẹp Việt được gửi gắm trong từng đường kim mũi chỉ.”</p>
+        </blockquote>
+      </div>
+      <div class="info-col info-col-details">
+        <div class="info-detail-item" *ngIf="product?.material">
+          <span class="info-detail-label">Chất liệu</span>
+          <span class="info-care-text">{{ product?.material }}</span>
+        </div>
+        <div class="info-detail-item" *ngIf="product?.origin">
+          <span class="info-detail-label">Xuất xứ</span>
+          <span class="info-detail-value">{{ product?.origin }}</span>
+        </div>
+        <div class="info-detail-item">
+          <span class="info-detail-label">Đổi trả</span>
+          <span class="info-detail-value">Miễn phí trong 30 ngày</span>
+        </div>
+        <div class="info-detail-item">
+          <span class="info-detail-label">Hotline</span>
+          <span class="info-detail-value"><a class="support-link" href="tel:0962731333">0962 731 333</a></span>
+        </div>
+        <div class="info-care">
+          <span class="info-detail-label">Bảo quản</span>
+          <span class="info-care-text">Không giặt nước nóng · Không chất tẩy mạnh · Ủi nhiệt độ thấp</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Size Guide Popup -->
+  <div class="size-popup" *ngIf="showSizeGuide">
+    <div class="size-popup-overlay" (click)="closeSizeGuide()"></div>
+    <div class="size-popup-content">
+      <button class="close-btn" (click)="closeSizeGuide()">✕</button>
+      <img src="/assets/size-guide.jpg" alt="Size Guide">
+    </div>
+  </div>
+
+  <!-- Related Products -->
+  <div class="related-section" *ngIf="relatedProducts.length > 0">
+    <h2 class="section-title">Sản phẩm liên quan</h2>
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let item of relatedProducts" [routerLink]="['/product', item._id]">
+        <div class="card-image">
+          <img class="img1" [src]="getImageSrc(item.images?.[0])">
+          <img class="img2" *ngIf="item.images && item.images.length > 1" [src]="getImageSrc(item.images[1])">
+        </div>
+        <div class="card-body">
+          <h3>{{ item.product_name }}</h3>
+          <p class="card-price">{{ item.unit_price | number }}₫</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewed Products -->
+  <div class="viewed-section" *ngIf="viewedProducts.length > 0">
+    <h2 class="section-title section-title--viewed">💗 Sản phẩm đã xem</h2>
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let item of viewedProducts" [routerLink]="['/product', item._id]">
+        <div class="card-image">
+          <img class="img1" [src]="getImageSrc(item.images?.[0])">
+          <img class="img2" *ngIf="item.images && item.images.length > 1" [src]="getImageSrc(item.images[1])">
+        </div>
+        <div class="card-body">
+          <h3>{{ item.product_name }}</h3>
+          <p class="card-price">{{ item.unit_price | number }}₫</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

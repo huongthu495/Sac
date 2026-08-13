@@ -1,0 +1,51 @@
+<div class="collection-wrap">
+  <!-- Hero video -->
+  <header class="collection-hero">
+    <video #heroVideo autoplay muted loop playsinline class="hero-video">
+      <source src="assets/video_collection.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Bộ Sưu Tập</span>
+      <h1 class="hero-title">{{ collectionTitle }}</h1>
+
+    </div>
+  </header>
+
+  <!-- Gallery grid -->
+  <div class="gallery" *ngIf="album.length">
+
+    <!-- Row 1: single full -->
+    <div class="gallery-full" *ngIf="album[0]">
+      <img [src]="album[0]" [alt]="collectionTitle + ' 1'">
+    </div>
+
+    <!-- Row 2: 2 col -->
+    <div class="gallery-duo" *ngIf="album[1] || album[2]">
+      <div class="gallery-duo__item" *ngIf="album[1]"><img [src]="album[1]" [alt]="collectionTitle + ' 2'"></div>
+      <div class="gallery-duo__item" *ngIf="album[2]"><img [src]="album[2]" [alt]="collectionTitle + ' 3'"></div>
+    </div>
+
+    <!-- Row 3: single full -->
+    <div class="gallery-full" *ngIf="album[3]">
+      <img [src]="album[3]" [alt]="collectionTitle + ' 4'">
+    </div>
+
+    <!-- Row 4: 2 col -->
+    <div class="gallery-duo" *ngIf="album[4] || album[5]">
+      <div class="gallery-duo__item" *ngIf="album[4]"><img [src]="album[4]" [alt]="collectionTitle + ' 5'"></div>
+      <div class="gallery-duo__item" *ngIf="album[5]"><img [src]="album[5]" [alt]="collectionTitle + ' 6'"></div>
+    </div>
+
+    <!-- Row 5: single full -->
+    <div class="gallery-full" *ngIf="album[6]">
+      <img [src]="album[6]" [alt]="collectionTitle + ' 7'">
+    </div>
+
+    <!-- Row 6: remaining full -->
+    <div class="gallery-full" *ngIf="album[7]">
+      <img [src]="album[7]" [alt]="collectionTitle + ' 8'">
+    </div>
+
+  </div>
+</div>

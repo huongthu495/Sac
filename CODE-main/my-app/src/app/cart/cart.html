@@ -1,0 +1,192 @@
+<div class="checkout-page">
+  <div class="checkout-container">
+
+    <!-- LEFT: FORM -->
+    <div class="checkout-left">
+
+      <!-- Shipping Info -->
+      <div class="form-card">
+        <div class="card-header">
+          <span class="card-step">1</span>
+          <h2 class="card-title">Thông tin giao hàng</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Họ và tên</label>
+              <input type="text" class="form-input" placeholder="Nguyễn Văn A" [(ngModel)]="form.name" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Số điện thoại</label>
+              <input type="text" class="form-input" placeholder="0912 345 678" [(ngModel)]="form.phone" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="email@example.com" [(ngModel)]="form.email" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Địa chỉ</label>
+            <input type="text" class="form-input" placeholder="Số nhà, tên đường..." [(ngModel)]="form.address" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tỉnh / Thành phố</label>
+              <select class="form-select" (change)="onProvinceChange($event)" [(ngModel)]="selectedProvince">
+                <option value="" disabled selected>Chọn tỉnh/thành phố</option>
+                <option *ngFor="let p of provinces" [value]="p.code">{{ p.name }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phường / Xã</label>
+              <select class="form-select" (change)="onWardChange($event)" [(ngModel)]="selectedWard" [disabled]="!selectedProvince">
+                <option value="" disabled selected>Chọn phường/xã</option>
+                <option *ngFor="let w of wards" [value]="w.code">{{ w.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shipping Method -->
+      <div class="form-card">
+        <div class="card-header">
+          <span class="card-step">2</span>
+          <h2 class="card-title">Phương thức vận chuyển</h2>
+        </div>
+        <div class="card-body">
+          <ng-container *ngIf="selectedProvince; else chooseProvince">
+            <div class="option-item selected">
+              <input type="radio" id="shipping1" name="shipping" checked />
+              <label for="shipping1" class="option-label">
+                <span class="option-radio"></span>
+                <div class="option-content">
+                  <span class="option-name">Giao hàng tận nơi</span>
+                  <span class="option-price">{{ shippingFee | number }}đ</span>
+                </div>
+              </label>
+            </div>
+          </ng-container>
+          <ng-template #chooseProvince>
+            <p class="hint-text">Vui lòng chọn tỉnh/thành phố để xem phí vận chuyển.</p>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="form-card">
+        <div class="card-header">
+          <span class="card-step">3</span>
+          <h2 class="card-title">Phương thức thanh toán</h2>
+        </div>
+        <div class="card-body">
+          <div class="option-item" [class.selected]="paymentMethod === 'online'">
+            <input type="radio" id="payment1" name="payment" [(ngModel)]="paymentMethod" [value]="'online'" />
+            <label for="payment1" class="option-label">
+              <span class="option-radio"></span>
+              <div class="option-content">
+                <span class="option-icon">💳</span>
+                <div>
+                  <span class="option-name">Thanh toán online</span>
+                  <span class="option-desc">VNPay (ATM/Visa/MasterCard/JCB/QR Pay)</span>
+                </div>
+              </div>
+            </label>
+          </div>
+          <div class="option-item" [class.selected]="paymentMethod === 'cod'">
+            <input type="radio" id="payment2" name="payment" [(ngModel)]="paymentMethod" [value]="'cod'" />
+            <label for="payment2" class="option-label">
+              <span class="option-radio"></span>
+              <div class="option-content">
+                <span class="option-icon">💵</span>
+                <div>
+                  <span class="option-name">Thanh toán khi nhận hàng</span>
+                  <span class="option-desc">Trả tiền mặt khi nhận hàng (COD)</span>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR modal component -->
+    <app-qr #qr (paymentConfirmed)="onQrConfirmed()"></app-qr>
+
+    <!-- RIGHT: CART SUMMARY -->
+    <div class="checkout-right">
+      <div class="cart-card">
+        <div class="cart-header">
+          <h2 class="card-title">Giỏ hàng</h2>
+          <span class="cart-count" *ngIf="cart.length > 0">{{ cart.length }} sản phẩm</span>
+        </div>
+
+        <!-- Empty Cart -->
+        <div *ngIf="cart.length === 0" class="empty-cart">
+          <svg width="56" height="56" fill="none" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#c9a468" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 6h18" stroke="#c9a468" stroke-width="1.5"/>
+            <path d="M16 10a4 4 0 01-8 0" stroke="#c9a468" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>Giỏ hàng trống</h3>
+          <p>Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm!</p>
+        </div>
+
+        <!-- Cart Items -->
+        <div class="cart-items" *ngIf="cart.length > 0">
+          <div class="cart-item" *ngFor="let item of cart">
+            <div class="item-image">
+              <img [src]="resolveAssetImage(item.image || (item.images && item.images[0]))" [alt]="item.name">
+            </div>
+            <div class="item-details">
+              <h4 class="item-name">{{ item.name }}</h4>
+              <div class="item-meta">
+                <div class="quantity-control">
+                  <button class="qty-btn" (click)="decrease(item)" [disabled]="loading">−</button>
+                  <span class="qty-value">{{ item.quantity }}</span>
+                  <button class="qty-btn" (click)="increase(item)" [disabled]="loading">+</button>
+                </div>
+                <span class="item-price">{{ item.price | number }}đ</span>
+              </div>
+            </div>
+            <button class="remove-btn" (click)="removeItem(item)" [disabled]="loading" title="Xóa">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Voucher -->
+        <div class="voucher-row" *ngIf="cart.length > 0">
+          <input type="text" class="voucher-input" placeholder="Mã giảm giá" />
+          <button class="voucher-btn">Áp dụng</button>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="summary-section" *ngIf="cart.length > 0">
+          <div class="summary-line">
+            <span>Tạm tính</span>
+            <span>{{ total | number }}đ</span>
+          </div>
+          <div class="summary-line">
+            <span>Phí vận chuyển</span>
+            <span>{{ shippingFee | number }}đ</span>
+          </div>
+          <div class="summary-line summary-total">
+            <span>Tổng cộng</span>
+            <span>{{ (total + shippingFee) | number }}đ</span>
+          </div>
+        </div>
+
+        <button class="btn-order" (click)="submitOrder()" [disabled]="loading || cart.length === 0">
+          <span *ngIf="!loading">Đặt hàng</span>
+          <span *ngIf="loading">Đang xử lý...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="app-toast" *ngIf="toastVisible" [ngClass]="{'success': toastType==='success', 'error': toastType==='error'}">
+    <div class="app-toast-inner">{{ toastMessage }}</div>
+  </div>
+</div>

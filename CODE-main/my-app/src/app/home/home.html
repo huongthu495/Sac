@@ -1,0 +1,180 @@
+<div class="home-page">
+  <section class="hero-slider">
+    <div class="hero-slider-track">
+      <!-- Các Slide ảnh -->
+      <div
+        class="hero-slide"
+        *ngFor="let slide of slides; let i = index"
+        [class.active]="i === currentSlide"
+        [style.backgroundImage]="'url(' + slide.image + ')'">
+      </div>
+
+      <!-- Hai mũi tên trái phải nằm TRONG track -->
+      <button class="nav-btn prev" (click)="prevSlide()">‹</button>
+      <button class="nav-btn next" (click)="nextSlide()">›</button>
+
+      <!-- Các dấu chấm nằm TRONG track -->
+      <div class="dots-container">
+        <div class="dots">
+          <span
+            class="dot"
+            *ngFor="let slide of slides; let i = index"
+            [class.active]="i === currentSlide"
+            (click)="goToSlide(i)">
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="brand-story-section">
+  <div class="brand-story-intro">
+    <p class="brand-story-eyebrow">Dấu ấn của SẮC</p>
+    <h2 class="brand-story-title">Những câu chuyện được dệt thành hình, kể lại bằng sắc màu Việt</h2>
+    <p class="brand-story-subtitle">
+      Ngay trước khi lắng nghe cảm nhận từ khách hàng, SẮC muốn kể về hành trình gìn giữ thẩm mỹ truyền thống
+      qua những thiết kế mang tinh thần đương đại.
+    </p>
+  </div>
+
+  <div class="brand-story-grid">
+    <article class="brand-story-card image-left tone-ivory">
+      <div class="brand-story-media">
+        <img src="/assets/thy1.png" alt="Khăn lụa với họa tiết truyền thống Việt Nam">
+      </div>
+      <div class="brand-story-copy">
+        <p class="brand-story-kicker">Kiệt tác trong từng đường nét</p>
+        <h3>Họa tiết kể chuyện, chất liệu giữ hồn di sản</h3>
+        <p>
+          Từ những đường nét lấy cảm hứng từ tranh dân gian, kiến trúc cung đình và nếp sống Á Đông, mỗi thiết kế
+          của SẮC đều được chọn lọc để vừa có chiều sâu văn hóa, vừa đủ tinh gọn cho nhịp sống hôm nay.
+        </p>
+        <a class="brand-story-link" href="/aboutus">Khám phá câu chuyện của SẮC</a>
+      </div>
+    </article>
+
+    <article class="brand-story-card image-right tone-teal">
+      <div class="brand-story-copy">
+        <p class="brand-story-kicker">Nét đẹp đương đại</p>
+        <h3>Tinh thần Việt được chuyển hóa thành trải nghiệm mặc đầy cảm xúc</h3>
+        <p>
+          SẮC không chỉ tạo nên trang phục và phụ kiện. Chúng tôi xây dựng một không gian nơi người mặc có thể cảm
+          nhận sự mềm mại của chất liệu, vẻ chỉn chu của phom dáng và niềm tự hào với bản sắc Việt.
+        </p>
+        <a class="brand-story-link light-link" href="/products">Xem bộ sưu tập nổi bật</a>
+      </div>
+      <div class="brand-story-media">
+        <img src="/assets/thy4.jpg" alt="Người mẫu với thiết kế mang cảm hứng văn hóa Việt">
+      </div>
+    </article>
+
+    <article class="brand-story-card image-left tone-rust">
+      <div class="brand-story-media">
+        <img src="/assets/xuananh1.jpg" alt="Thiết kế mang màu sắc thủ công và bản sắc truyền thống">
+      </div>
+      <div class="brand-story-copy">
+        <p class="brand-story-kicker">Hành trình bền bỉ</p>
+        <h3>Mỗi sản phẩm là một lời mời chạm vào vẻ đẹp Việt Nam theo cách gần gũi hơn</h3>
+        <p>
+          Từ món quà tinh tế dành cho người thân đến bộ trang phục cho dịp đặc biệt, SẮC mong mỗi lần lựa chọn của
+          bạn đều trở thành một trải nghiệm đáng nhớ, nơi văn hóa được tiếp nối bằng sự yêu thích thật sự.
+        </p>
+        <a class="brand-story-link light-link" href="/aboutus">Đọc thêm về hành trình thương hiệu</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- VISION SECTION -->
+<app-vision></app-vision>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <p class="testimonials-eyebrow">Cảm nhận khách hàng</p>
+      <h2 class="testimonials-title">
+        Khách hàng nói gì về <span class="brand-highlight">SẮC</span>?
+      </h2>
+      <p class="testimonials-subtitle">
+        Những chia sẻ chân thực từ khách hàng đã chọn SẮC cho các dịp quan trọng và đời sống thường nhật.
+      </p>
+    </div>
+
+    <div class="testimonials-carousel-wrapper">
+      <button
+        class="testimonial-nav-btn prev-testimonial-btn"
+        type="button"
+        aria-label="Đánh giá trước"
+        (click)="prevTestimonials()">
+        <span aria-hidden="true">&#8249;</span>
+      </button>
+      <button
+        class="testimonial-nav-btn next-testimonial-btn"
+        type="button"
+        aria-label="Đánh giá tiếp theo"
+        (click)="nextTestimonials()">
+        <span aria-hidden="true">&#8250;</span>
+      </button>
+
+      <div class="testimonials-carousel">
+        <div class="testimonials-track" [style.transform]="'translateX(-' + currentTestimonialPage * 100 + '%)'">
+          <div class="testimonials-page" *ngFor="let page of testimonialPages">
+            <div class="testimonial-card" *ngFor="let testimonial of page">
+              <div class="quote-icon" aria-hidden="true">&#8220;</div>
+              <p class="testimonial-text">{{ testimonial.text }}</p>
+              <div class="testimonial-rating" aria-label="5 sao">
+                <span class="star" *ngFor="let _ of [1, 2, 3, 4, 5]">&#9733;</span>
+              </div>
+              <div class="testimonial-author">
+                <h4 class="author-name">{{ testimonial.name }}</h4>
+                <p class="author-role">{{ testimonial.role }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonials-dots">
+        <button
+          class="testimonial-dot"
+          type="button"
+          *ngFor="let page of testimonialPages; let i = index"
+          [class.active]="i === currentTestimonialPage"
+          [attr.aria-label]="'Đi đến trang đánh giá ' + (i + 1)"
+          (click)="goToTestimonialsPage(i)">
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="home-blog-section" *ngIf="latestBlogs.length > 0">
+  <div class="home-blog-container">
+    <p class="home-blog-eyebrow">Từ nhật ký SẮC</p>
+    <h2 class="home-blog-title">Mẩu chuyện nhỏ</h2>
+    <p class="home-blog-subtitle">Gói ghém hồn Việt vào tà áo dài qua những chuyện kể giản đơn mà sâu sắc.</p>
+
+    <div class="home-blog-grid">
+      <article class="home-blog-card" *ngFor="let blog of latestBlogs" (click)="goToBlog(blog._id)">
+        <div class="home-blog-card-img">
+          <img [src]="blog.thumbnail" [alt]="blog.title">
+        </div>
+        <div class="home-blog-card-body">
+          <div class="home-blog-card-meta">
+            <span>{{ blog.authorName }}</span>
+            <span class="home-blog-card-dot">·</span>
+            <span>{{ formatBlogDate(blog.publishedAt || blog.createdAt) }}</span>
+          </div>
+          <h3 class="home-blog-card-title">{{ blog.title }}</h3>
+          <p class="home-blog-card-excerpt">{{ blog.excerpt }}</p>
+        </div>
+      </article>
+    </div>
+    <div class="home-blog-cta">
+      <a routerLink="/sac-blog" class="home-blog-cta-btn">Xem tất cả bài viết</a>
+    </div>
+  </div>
+</section>

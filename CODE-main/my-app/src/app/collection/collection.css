@@ -1,0 +1,128 @@
+/* ===== COLLECTION WRAP ===== */
+.collection-wrap {
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* ===== HERO VIDEO ===== */
+.collection-hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #111;
+  margin: 6px 40px 0;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.18) 0%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.65) 100%
+  );
+  z-index: 2;
+}
+
+.hero-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 72px;
+  text-align: center;
+  gap: 8px;
+}
+
+.hero-eyebrow {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,222,228,0.85);
+  font-weight: 400;
+}
+
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2rem, 6vw, 5rem);
+  font-weight: 600;
+  color: #fff;
+  margin: 4px 0 0;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+}
+
+/* ===== GALLERY ===== */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 6px 40px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* Full-width row */
+.gallery-full {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.gallery-full img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 2-column row */
+.gallery-duo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+  line-height: 0;
+}
+
+.gallery-duo__item {
+  overflow: hidden;
+  line-height: 0;
+}
+
+.gallery-duo__item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .gallery-duo {
+    grid-template-columns: 1fr;
+  }
+  .gallery-duo__item img {
+    height: 100vw;
+  }
+  .gallery-full img {
+    height: 70vw;
+  }
+  .hero-title {
+    font-size: clamp(2.4rem, 12vw, 4rem);
+  }
+}

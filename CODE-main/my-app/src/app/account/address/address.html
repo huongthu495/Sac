@@ -1,0 +1,97 @@
+<section class="address-shell">
+  <header class="address-header">
+    <h1>Sổ địa chỉ</h1>
+    <p>Cập nhật địa chỉ giao hàng mặc định cho tài khoản của bạn.</p>
+  </header>
+
+  <!-- HIỂN THỊ -->
+  <article class="address-card" *ngIf="!isEditing">
+    <div class="line">
+      <strong>Số điện thoại:</strong> {{ address.phone || 'Chưa cập nhật' }}
+    </div>
+    <div class="line">
+      <strong>Địa chỉ:</strong> {{ address.address || 'Chưa cập nhật' }}
+    </div>
+    <div class="line">
+      <strong>Phường/Xã:</strong> {{ address.ward || 'Chưa cập nhật' }}
+    </div>
+    <div class="line">
+      <strong>Tỉnh/Thành phố:</strong> {{ address.city || 'Chưa cập nhật' }}
+    </div>
+
+    <button class="primary" (click)="startEdit()">
+      Chỉnh sửa địa chỉ
+    </button>
+  </article>
+
+  <!-- FORM -->
+  <article class="address-card" *ngIf="isEditing">
+
+    <!-- SỐ NHÀ -->
+    <label>
+      Số điện thoại
+      <input
+        [(ngModel)]="formAddress.phone"
+        name="phone"
+        placeholder="VD: 0912345678"
+      />
+    </label>
+
+    <label>
+      Địa chỉ (số nhà, tên đường, khu phố)
+      <input
+        [(ngModel)]="formAddress.address"
+        name="address"
+        placeholder="VD: 123 Lê Lợi, Khu phố 2"
+      />
+    </label>
+
+    <!-- DROPDOWN ĐỊA CHỈ -->
+    <div class="address-select">
+      <!-- TỈNH -->
+      <label>
+        Tỉnh / Thành phố
+        <select (change)="onProvinceChange($event)" [(ngModel)]="selectedProvince" name="province">
+          <option value="">Chọn Tỉnh / Thành phố</option>
+          <option *ngFor="let p of provinces" [value]="p.code">
+            {{ p.name }}
+          </option>
+        </select>
+      </label>
+
+      <!-- PHƯỜNG -->
+      <label>
+        Phường / Xã
+        <select
+          (change)="onWardChange($event)"
+          [(ngModel)]="selectedWard"
+          name="ward"
+          [disabled]="!wards.length"
+        >
+          <option value="">Chọn Phường / Xã</option>
+          <option *ngFor="let w of wards" [value]="w.code">
+            {{ w.name }}
+          </option>
+        </select>
+      </label>
+    </div>
+
+    <!-- BUTTON -->
+    <div class="actions">
+      <button
+        class="ghost"
+        (click)="cancelEdit()"
+        [disabled]="isSaving"
+      >
+        Hủy
+      </button>
+      <button
+        class="primary"
+        (click)="saveAddress()"
+        [disabled]="isSaving"
+      >
+        {{ isSaving ? 'Đang lưu...' : 'Lưu địa chỉ' }}
+      </button>
+    </div>
+  </article>
+</section>

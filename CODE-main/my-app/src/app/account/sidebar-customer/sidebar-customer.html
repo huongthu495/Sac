@@ -1,0 +1,42 @@
+<button class="mobile-menu-btn" (click)="toggleMobileSidebar()" *ngIf="!isMobileSidebarOpen">
+  Menu tài khoản
+</button>
+
+<div class="mobile-overlay" *ngIf="isMobileSidebarOpen" (click)="closeMobileSidebar()"></div>
+
+<aside class="account-sidebar" [class.mobile-open]="isMobileSidebarOpen">
+  <button class="mobile-close-btn" (click)="closeMobileSidebar()" aria-label="Đóng menu">×</button>
+
+  <div class="user-section">
+    <ng-container *ngIf="hasCustomAvatar; else defaultAvatar">
+      <div class="avatar-container has-custom">
+        <img class="user-avatar" [src]="userAvatar" alt="\u1ea2nh \u0111\u1ea1i di\u1ec7n" />
+      </div>
+    </ng-container>
+    <ng-template #defaultAvatar>
+      <div class="avatar-container">
+        <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M4 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </ng-template>
+    <h3 class="user-name">{{ userName }}</h3>
+    <p class="user-email" *ngIf="userEmail">{{ userEmail }}</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a
+      class="menu-link"
+      *ngFor="let item of menuItems"
+      [routerLink]="item.route"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="closeMobileSidebar()"
+    >
+      {{ item.label }}
+    </a>
+  </nav>
+
+  <button class="logout-btn" (click)="onLogout()">Đăng xuất</button>
+</aside>

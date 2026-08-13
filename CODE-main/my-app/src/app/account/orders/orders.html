@@ -1,0 +1,193 @@
+<section class="orders-container">
+  <div class="orders-header">
+    <h2>Quản Lý Đơn Hàng</h2>
+    <p class="orders-subtitle">Xem và quản lý các đơn hàng của bạn</p>
+  </div>
+
+  <!-- Filter Orders -->
+  <div class="filter-section">
+    <label for="statusFilter">Lọc theo trạng thái:</label>
+    <select 
+      id="statusFilter" 
+      [(ngModel)]="statusFilter" 
+      (change)="filterOrders()"
+      class="filter-select">
+      <option value="all">Tất cả</option>
+      <option value="pending">Chờ xử lý</option>
+      <option value="processing">Đang xử lý</option>
+      <option value="shipped">Đã gửi</option>
+      <option value="delivered">Đã giao</option>
+      <option value="cancelled">Đã hủy</option>
+    </select>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <p>Đang tải đơn hàng...</p>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngIf="!loading && filteredOrders.length > 0" class="orders-table-wrap">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Mã đơn</th>
+          <th>Ngày</th>
+          <th>Số SP</th>
+          <th>Tổng</th>
+          <th>Thanh toán</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let order of filteredOrders">
+          <tr [class.expanded]="expandedOrderId === order._id">
+            <td>
+              <button class="link-btn" (click)="toggleOrderExpand(order._id || '')">
+                {{ formatOrderCode(order) }}
+              </button>
+            </td>
+            <td>{{ order.createdAt ? (order.createdAt | date: 'dd/MM/yyyy') : 'N/A' }}</td>
+            <td>{{ (order.orderItems || []).length }}</td>
+            <td class="amount">{{ (order.totalPrice || 0) | number:'1.0-0' }} đ</td>
+            <td>
+              <span [class.paid]="!isCod(order)" [class.cod]="isCod(order)" [title]="isCod(order) ? 'Thanh toán khi nhận hàng (COD)' : 'Đã thanh toán'">
+                {{ isCod(order) ? 'COD' : 'Đã thanh toán' }}
+              </span>
+            </td>
+            <td>
+              <span class="status-badge {{ getStatusBadgeClass(order.status || '') }}">
+                {{ getStatusLabel(order.status || '') }}
+              </span>
+            </td>
+            <td class="actions">
+              <button class="btn-view" (click)="viewOrder(order)">Xem</button>
+              <button class="btn-cancel" *ngIf="order.status === 'pending'" (click)="cancelOrder(order._id || '')">Hủy</button>
+            </td>
+          </tr>
+
+          <!-- Expanded details row -->
+          <tr class="details-row" *ngIf="expandedOrderId === order._id">
+            <td colspan="7">
+              <div class="details-inner">
+                <div class="details-items">
+                  <strong>Chi tiết sản phẩm</strong>
+                  <ul>
+                    <li *ngFor="let item of (order.orderItems || [])">
+                      {{ item.name }} x{{ item.qty }} — {{ (item.price || 0) | number:'1.0-0' }}đ
+                    </li>
+                  </ul>
+                </div>
+                <div class="meta-right">
+                  <div class="customer-name">{{ order?.customerName || order?.customerInfo?.name || '' }}</div>
+                  <div class="customer-phone">{{ order?.customerInfo?.phone || order?.phone || '' }}</div>
+                  <div class="shipping-address">
+                    <strong>Địa chỉ giao hàng:</strong>
+                    <span *ngIf="order?.shippingAddressObj; else shippingText">
+                      {{ order?.shippingAddressObj?.address || order?.shippingAddress || order?.customerInfo?.address || '' }}
+                      <span *ngIf="order?.shippingAddressObj?.ward">, {{ order?.shippingAddressObj?.ward }}</span>
+                      <span *ngIf="order?.shippingAddressObj?.city">, {{ order?.shippingAddressObj?.city }}</span>
+                    </span>
+                    <ng-template #shippingText>{{ order?.shippingAddress || order?.customerInfo?.address || '' }}</ng-template>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Order Details Modal -->
+  <div class="modal-backdrop" *ngIf="showOrderModal">
+    <div class="modal-dialog">
+      <div class="modal-content modal-large">
+        <div class="modal-header">
+          <h3>Chi tiết đơn hàng</h3>
+          <button class="close-btn" (click)="closeOrderModal()">×</button>
+        </div>
+        <div class="modal-body">
+          <div class="order-modal">
+            <div class="order-meta">
+                <div class="meta-left">
+                <h4 class="order-id">Mã đơn: <span>{{ formatOrderCode(selectedOrder) }}</span></h4>
+                <div class="meta-row"><strong>Ngày đặt:</strong> {{ selectedOrder?.createdAt ? (selectedOrder?.createdAt | date:'dd/MM/yyyy HH:mm') : '' }}</div>
+                <div class="meta-row"><strong>Trạng thái:</strong>
+                  <span class="status-badge {{ getStatusBadgeClass(selectedOrder?.status || '') }}">{{ getStatusLabel(selectedOrder?.status || '') }}</span>
+                </div>
+              </div>
+              <div class="meta-right">
+                <div class="customer-name">{{ selectedOrder?.customerName || selectedOrder?.customerInfo?.name || '' }}</div>
+                <div class="customer-phone">{{ selectedOrder?.customerInfo?.phone || selectedOrder?.phone || '' }}</div>
+                <div class="shipping-address">
+                  <strong>Địa chỉ giao hàng:</strong>
+                  <span *ngIf="selectedOrder?.shippingAddressObj; else shippingText">
+                    {{ selectedOrder?.shippingAddressObj?.address || selectedOrder?.shippingAddress || selectedOrder?.customerInfo?.address || '' }}
+                    <span *ngIf="selectedOrder?.shippingAddressObj?.ward">, {{ selectedOrder?.shippingAddressObj?.ward }}</span>
+                    <span *ngIf="selectedOrder?.shippingAddressObj?.city">, {{ selectedOrder?.shippingAddressObj?.city }}</span>
+                  </span>
+                  <ng-template #shippingText>{{ selectedOrder?.shippingAddress || selectedOrder?.customerInfo?.address || '' }}</ng-template>
+                </div>
+              </div>
+            </div>
+
+            <div class="products-card">
+              <table class="modal-items">
+                <thead>
+                  <tr>
+                    <th class="col-prod">Sản phẩm</th>
+                    <th class="col-qty">Số lượng</th>
+                    <th class="col-price">Đơn giá</th>
+                    <th class="col-total">Thành tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of (selectedOrder?.orderItems || [])">
+                    <td class="col-prod">
+                      <div class="prod-item">
+                        <img *ngIf="item.image" [src]="item.image" alt="" class="prod-thumb" />
+                        <div class="prod-info">
+                          <div class="prod-name">{{ item.name }}</div>
+                          <div class="prod-sku" *ngIf="item.sku">SKU: {{ item.sku }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="col-qty">{{ item.qty }}</td>
+                    <td class="col-price">{{ (item.price || 0) | number:'1.0-0' }} đ</td>
+                    <td class="col-total">{{ (((item.price || 0) * (item.qty || 0))) | number:'1.0-0' }} đ</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="order-footer">
+              <div class="summary-list">
+                <div class="summary-row">
+                  <div class="summary-label">Tạm tính</div>
+                  <div class="summary-value">{{ selectedOrder?.subTotal | number:'1.0-0' }} đ</div>
+                </div>
+                <div class="summary-row">
+                  <div class="summary-label">Phí vận chuyển</div>
+                  <div class="summary-value">{{ selectedOrder?.shippingFee | number:'1.0-0' }} đ</div>
+                </div>
+                <div class="summary-row total">
+                  <div class="summary-label">Tổng tiền</div>
+                  <div class="summary-value big">{{ selectedOrder?.totalPrice | number:'1.0-0' }} đ</div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && filteredOrders.length === 0" class="empty-state">
+    <p>Không có đơn hàng nào</p>
+    <small>Bạn chưa có đơn hàng. Hãy bắt đầu mua sắm ngay!</small>
+  </div>
+</section>

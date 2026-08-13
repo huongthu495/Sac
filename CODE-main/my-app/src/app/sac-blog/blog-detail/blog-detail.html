@@ -1,0 +1,74 @@
+<!-- Blog Detail Page -->
+<div *ngIf="!isLoading && !error" class="blog-detail-container">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a routerLink="/" class="breadcrumb-link">Trang chủ</a>
+    <span class="breadcrumb-sep">›</span>
+    <a routerLink="/sac-blog" class="breadcrumb-link">Mẩu chuyện nhỏ</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ currentPost?.title }}</span>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-category" *ngIf="currentPost?.category">{{ currentPost?.category }}</span>
+      <h1 class="hero-title">{{ currentPost?.title }}</h1>
+      <div class="hero-meta">
+        <span class="meta-author">{{ currentPost?.authorName || 'SẮC' }}</span>
+        <span class="meta-dot">·</span>
+        <span class="meta-date">{{ currentPost?.publishedAt ? formatDate(currentPost?.publishedAt) : '' }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Article Body -->
+  <div class="article-wrapper">
+    <article class="article-card">
+      <!-- Featured Image -->
+      <div class="article-hero-img" *ngIf="currentPost?.thumbnail">
+        <img [src]="currentPost?.thumbnail" [alt]="currentPost?.title"
+             (load)="onImageLoad($event)" (error)="onImageError($event)" />
+      </div>
+
+      <!-- Content -->
+      <div class="article-body" [innerHTML]="currentPost?.content"></div>
+
+      <!-- Tags -->
+      <div class="article-tags" *ngIf="hasHashtags()">
+        <span *ngFor="let tag of getHashtags()" class="tag-badge">{{ tag }}</span>
+      </div>
+      <div class="article-tags" *ngIf="shouldShowCategoryTag() && !hasHashtags()">
+        <span class="tag-badge">{{ currentPost?.category }}</span>
+      </div>
+    </article>
+  </div>
+
+  <!-- Post Navigation -->
+  <section class="post-nav" *ngIf="prevPost || nextPost">
+    <div class="post-nav-inner">
+      <div class="post-nav-item" *ngIf="prevPost" (click)="navigateToPost(prevPost._id)">
+        <span class="post-nav-label">← Bài trước</span>
+        <h4 class="post-nav-title">{{ prevPost.title }}</h4>
+      </div>
+      <div class="post-nav-item post-nav-next" *ngIf="nextPost" (click)="navigateToPost(nextPost._id)">
+        <span class="post-nav-label">Bài tiếp →</span>
+        <h4 class="post-nav-title">{{ nextPost.title }}</h4>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Loading -->
+<div *ngIf="isLoading" class="state-container">
+  <div class="spinner"></div>
+  <p>Đang tải bài viết...</p>
+</div>
+
+<!-- Error -->
+<div *ngIf="error" class="state-container">
+  <h2>Không tìm thấy bài viết</h2>
+  <p>{{ error }}</p>
+  <a routerLink="/sac-blog" class="back-btn">← Quay lại</a>
+</div>

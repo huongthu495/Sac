@@ -1,0 +1,94 @@
+<div class="contact-page">
+  <div class="bg-overlay" aria-hidden="true">
+    <img src="/assets/bg_contact.png" alt="Background texture">
+  </div>
+
+  <section class="content">
+    <div class="contact-shell">
+      <div class="contact-heading">
+        <p class="eyebrow">Chăm sóc khách hàng</p>
+        <h1 class="title">LIÊN HỆ VỚI SẮC</h1>
+        <p class="subtitle">
+          Để lại lời nhắn, đội ngũ SẮC sẽ phản hồi trong thời gian sớm nhất để hỗ trợ bạn tận tình.
+        </p>
+      </div>
+
+      <div class="contact-container">
+        <form class="contact-form" (submit)="onSubmit($event)">
+          <div class="row">
+            <div class="form-group">
+              <input id="firstName" name="firstName" type="text" placeholder=" " required>
+              <label for="firstName">Họ và tên *</label>
+            </div>
+
+            <div class="form-group">
+              <input id="phone" name="phone" type="tel" placeholder=" " required>
+              <label for="phone">Số điện thoại *</label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input id="email" name="email" type="email" placeholder=" " required>
+            <label for="email">Email *</label>
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
+            <label for="message">Câu hỏi của bạn *</label>
+          </div>
+
+          <div class="button-group">
+            <button class="btn-primary" type="submit">GỬI LỜI NHẮN ✦</button>
+          </div>
+        </form>
+
+        <aside class="contact-info">
+          <h3 class="info-title">Thông tin liên hệ</h3>
+
+          <div class="info-item">
+            <img src="/assets/location.png" alt="Location" class="icon icon-location">
+            <span>123 Nguyễn Trãi, Quận 1, TP. Hồ Chí Minh</span>
+          </div>
+
+          <div class="info-item">
+            <img src="/assets/time.png" alt="Time" class="icon icon-time">
+            <span>8:00 – 23:00</span>
+          </div>
+
+          <div class="info-item">
+            <img src="/assets/email.png" alt="Email" class="icon icon-email">
+            <a href="mailto:sac.support@gmail.com" class="clickable">sac.support@gmail.com</a>
+          </div>
+
+          <div class="info-item">
+            <img src="/assets/hotline.png" alt="Hotline" class="icon icon-hotline">
+            <a href="tel:0812059720" class="clickable">Hotline: 0812 059 720</a>
+          </div>
+
+          <div class="social-row">
+            <a class="social-icon" href="#" aria-label="Facebook">
+              <img src="/assets/facebook.png" alt="Facebook">
+            </a>
+            <a class="social-icon" href="#" aria-label="Messenger">
+              <img src="/assets/messenger.png" alt="Messenger" class="social-messenger">
+            </a>
+            <a class="social-icon" href="#" aria-label="Zalo">
+              <img src="/assets/zalo.png" alt="Zalo" class="social-zalo">
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="map-full">
+    <iframe
+      title="Bản đồ cửa hàng SẮC"
+      loading="lazy"
+      src="https://www.google.com/maps?q=123+Nguyen+Trai+Quan+1+Ho+Chi+Minh&output=embed">
+    </iframe>
+  </div>
+</div>
+
+
+

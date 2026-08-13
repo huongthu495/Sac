@@ -1,0 +1,204 @@
+<div class="signup-page">
+  <div class="signup-overlay"></div>
+
+  <div class="signup-shell">
+    <section class="signup-intro">
+      <p class="intro-kicker">Thành viên SẮC</p>
+      <h2>Đăng ký một lần, mua sắm thuận tiện hơn</h2>
+      <p class="intro-description">
+        Tạo tài khoản để lưu thông tin cần thiết, theo dõi đơn hàng dễ hơn
+        và nhận ưu đãi phù hợp với bạn.
+      </p>
+
+      <div class="intro-points">
+        <article class="intro-point">
+          <span class="intro-point-label">Nhanh gọn</span>
+          <strong>Lưu thông tin mua hàng</strong>
+          <p>Điền địa chỉ và thông tin cá nhân thuận tiện hơn ở những lần sau.</p>
+        </article>
+
+        <article class="intro-point">
+          <span class="intro-point-label">Chủ động</span>
+          <strong>Theo dõi đơn hàng dễ dàng</strong>
+          <p>Cập nhật trạng thái đơn và lịch sử mua sắm ngay trong tài khoản.</p>
+        </article>
+
+        <article class="intro-point">
+          <span class="intro-point-label">Ưu đãi</span>
+          <strong>Nhận thông tin phù hợp</strong>
+          <p>Không bỏ lỡ bộ sưu tập mới và các chương trình dành riêng cho bạn.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="signup-card">
+      <h3 class="signup-title">Đăng ký nhanh để bắt đầu mua sắm</h3>
+      <p class="signup-subtitle">Đăng ký bằng tài khoản email của bạn</p>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="signup-form">
+        <div class="form-row">
+          <label class="form-label">Tên hồ sơ</label>
+          <input
+            type="text"
+            formControlName="profileName"
+            class="form-control"
+            placeholder="Nhập tên hồ sơ của bạn"
+          >
+          <div
+            *ngIf="signupForm.get('profileName')?.invalid && signupForm.get('profileName')?.touched"
+            class="text-danger"
+          >
+            Tên hồ sơ là bắt buộc
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Nhập email"
+          >
+          <div
+            *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+            class="text-danger"
+          >
+            Email không hợp lệ
+          </div>
+        </div>
+
+        <div class="form-row two-col">
+          <div>
+            <label class="form-label">Mật khẩu</label>
+            <input
+              type="password"
+              formControlName="password"
+              class="form-control"
+              placeholder="Nhập mật khẩu"
+            >
+            <div
+              *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+              class="text-danger"
+            >
+              Mật khẩu phải ít nhất 8 ký tự
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label">Xác nhận mật khẩu</label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              class="form-control"
+              placeholder="Nhập lại mật khẩu"
+            >
+            <div
+              *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched"
+              class="text-danger"
+            >
+              Mật khẩu xác nhận không khớp
+            </div>
+          </div>
+        </div>
+
+        <div class="password-requirements">
+          <small class="requirements-title">Mật khẩu phải chứa:</small>
+          <ul class="requirements-list">
+            <li [class.valid]="passwordRequirements.length">
+              <span class="requirement-icon">✓</span>
+              Ít nhất 8 ký tự
+            </li>
+            <li [class.valid]="passwordRequirements.uppercase">
+              <span class="requirement-icon">✓</span>
+              Chữ hoa (A-Z)
+            </li>
+            <li [class.valid]="passwordRequirements.lowercase">
+              <span class="requirement-icon">✓</span>
+              Chữ thường (a-z)
+            </li>
+            <li [class.valid]="passwordRequirements.number">
+              <span class="requirement-icon">✓</span>
+              Số (0-9)
+            </li>
+            <li [class.valid]="passwordRequirements.special">
+              <span class="requirement-icon">✓</span>
+              Ký hiệu (!@#$%^&* vv...)
+            </li>
+          </ul>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Giới tính (tùy chọn)</label>
+          <div class="gender-group">
+            <label class="form-check">
+              <input type="radio" formControlName="gender" value="female">
+              <span>Nữ</span>
+            </label>
+
+            <label class="form-check">
+              <input type="radio" formControlName="gender" value="male">
+              <span>Nam</span>
+            </label>
+
+            <label class="form-check">
+              <input type="radio" formControlName="gender" value="other">
+              <span>Không xác định</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label">Ngày sinh</label>
+          <div class="birth-group">
+            <select formControlName="birthDay">
+              <option value="">Ngày</option>
+              <option *ngFor="let d of days" [value]="d">{{ d }}</option>
+            </select>
+
+            <select formControlName="birthMonth">
+              <option value="">Tháng</option>
+              <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+            </select>
+
+            <select formControlName="birthYear">
+              <option value="">Năm</option>
+              <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+            </select>
+          </div>
+          <div
+            *ngIf="
+              (signupForm.get('birthDay')?.invalid ||
+              signupForm.get('birthMonth')?.invalid ||
+              signupForm.get('birthYear')?.invalid) &&
+              submitAttempted
+            "
+            class="text-danger"
+          >
+            Vui lòng chọn ngày sinh
+          </div>
+        </div>
+
+        <label class="checkbox-area">
+          <input type="checkbox" formControlName="marketing">
+          <span>Chia sẻ dữ liệu đăng ký của tôi cho mục đích tiếp thị</span>
+        </label>
+
+        <p class="policy-text">
+          Bằng cách tạo tài khoản, bạn đồng ý với
+          <a routerLink="/policy" [queryParams]="{ open: 'terms' }">Điều khoản sử dụng</a>
+          và
+          <a routerLink="/policy">Chính sách bảo mật</a>
+        </p>
+
+        <button type="submit" class="signup-button">Đăng ký</button>
+
+        <p class="login-text">
+          Đã có tài khoản?
+          <a routerLink="/login">Đăng nhập</a>
+        </p>
+      </form>
+    </section>
+  </div>
+
+</div>

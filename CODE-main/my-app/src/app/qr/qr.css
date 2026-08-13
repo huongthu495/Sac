@@ -1,0 +1,191 @@
+/* Basic modal styling to match app look */
+.modal-content {
+	border-radius: 10px;
+	overflow: hidden;
+}
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 16px;
+	border-bottom: 1px solid #eee;
+}
+.modal-body {
+	padding: 16px;
+}
+.modal-footer {
+	padding: 12px 16px;
+	border-top: 1px solid #eee;
+}
+.nav-tabs .nav-link {
+	cursor: pointer;
+}
+.nav-tabs .nav-link.active {
+	color: #fff;
+	background: #6c7c3a;
+	border-radius: 6px;
+}
+
+/* Match the large rounded card from screenshot */
+.modal.fade.show.d-block {
+	/* Make the modal a true overlay disconnected from page layout */
+	position: fixed;
+	inset: 0; /* top:0; right:0; bottom:0; left:0 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.45); /* backdrop overlay */
+	z-index: 2000;
+	padding: 24px;
+}
+
+.modal-dialog {
+	max-width: 760px;
+	width: 95%;
+	margin: 0; /* centered by flex parent */
+	pointer-events: auto;
+	z-index: 2100;
+}
+
+.modal-content {
+	border-radius: 18px;
+	box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+	overflow: hidden;
+	transform: translateY(0);
+}
+
+.modal-header {
+	background: linear-gradient(180deg,#b82a2a,#8e1f1f);
+	color: #fff;
+	padding: 28px 28px 20px 28px;
+	border-bottom: none;
+}
+
+.modal-title {
+	font-size: 34px;
+	margin: 0;
+	font-weight: 700;
+}
+
+.btn-close {
+	background: rgba(255,255,255,0.2);
+	border-radius: 50%;
+	width: 36px;
+	height: 36px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+
+.modal-body {
+	background: #fff8f6;
+	padding: 26px 32px 32px 32px;
+}
+
+.modal-body .nav-tabs { border-bottom: none; padding: 0; }
+.modal-body .nav-tabs { margin-bottom: 18px; }
+.modal-body .nav { list-style: none; padding: 0; margin: 0; display: flex; gap: 12px; }
+.modal-body .nav-item { display: inline-block; }
+.modal-body .nav-link { color: #666; background: transparent; border: 1px solid transparent; padding: 8px 14px; border-radius: 8px; }
+.modal-body .nav-link.active { color: #8e1f1f; background: #ffeceb; border-color: rgba(142,31,31,0.08); }
+
+/* Center the QR area and use a neat white card */
+.qr-wrap { display:flex; justify-content:center; align-items:center; }
+.qr-box { background: #fff; padding: 22px; border-radius: 12px; border: 6px solid rgba(255,230,230,0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.12); max-width: 360px; }
+.qr-box img { width:100%; height:auto; display:block; border-radius:8px; max-height:420px; object-fit:contain; }
+
+/* Ensure modal body centers content vertically */
+.modal-body { display:flex; flex-direction:column; align-items:center; }
+
+/* Reduce dialog width and center vertically */
+.modal-dialog { max-width: 560px; }
+
+/* Tighter header spacing */
+.modal-header { padding: 20px 22px 16px 22px; }
+.modal-title { font-size: 28px; }
+
+/* make close button smaller and subtle */
+.btn-close { width:34px; height:34px; }
+
+.modal-footer {
+	background: #fff8f6; /* solid background so footer isn't transparent */
+	border-top: 1px solid rgba(0,0,0,0.04);
+	padding: 12px 20px;
+	display:flex;
+	justify-content:space-between; /* countdown left, actions right */
+	align-items:center;
+	gap:12px;
+}
+
+/* Countdown pill */
+.qr-countdown {
+	display:inline-block;
+	background: #e9fff0; /* solid, non-transparent background */
+	color: #1f7a33;
+	padding: 8px 12px;
+	border-radius: 10px;
+	font-weight: 800;
+	font-size: 15px;
+	min-width: 86px;
+	text-align: center;
+	box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+/* Actions styling */
+.qr-actions { display:inline-flex; gap:8px; }
+.qr-actions .btn {
+	padding: 8px 14px;
+	border-radius: 8px;
+	font-weight: 800;
+	font-size: 14px;
+	box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+	border: none;
+	cursor: pointer;
+}
+
+/* Success banner styling shown after confirm */
+.qr-success {
+	margin-top: 12px;
+	width: 100%;
+	text-align: center;
+	background: linear-gradient(90deg,#e9fff0,#f0fff6);
+	color: #0f7a3f;
+	border: 1px solid rgba(15,122,63,0.12);
+	padding: 10px 12px;
+	border-radius: 8px;
+	font-weight: 800;
+	box-shadow: 0 6px 18px rgba(15,122,63,0.06);
+}
+
+.qr-actions .btn[disabled] {
+	opacity: 0.6;
+	cursor: not-allowed;
+	filter: grayscale(0.05);
+}
+.qr-actions .btn-check {
+	background: #2f8f3f;
+	color: #fff;
+}
+.qr-actions .btn-check:hover { filter: brightness(0.95); }
+.qr-actions .btn-cancel {
+	background: #c0392b;
+	color: #fff;
+}
+.qr-actions .btn-cancel:hover { filter: brightness(0.95); }
+
+/* Make footer compact on small screens */
+@media (max-width: 480px) {
+	.modal-footer { flex-direction:column; align-items:flex-start; gap:8px; }
+	.qr-actions { width:100%; justify-content:flex-start; }
+	.qr-actions .btn { flex: none; }
+}
+
+/* Small responsive tweaks */
+@media (max-width: 600px) {
+	.modal-dialog { max-width: 92%; }
+	.modal-title { font-size: 22px; }
+	.tab-content img { max-width: 220px; }
+}

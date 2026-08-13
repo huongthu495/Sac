@@ -1,0 +1,132 @@
+
+
+<div class="dashboard">
+
+  <!-- Stats Cards -->
+  <section class="stats-grid">
+    <div class="stat-card card-users" (click)="goTo('/admin/users')">
+      <div class="stat-icon icon-users">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-number">{{ totalUsers }}</span>
+        <span class="stat-label">Người dùng</span>
+      </div>
+    </div>
+
+    <div class="stat-card card-orders" (click)="goTo('/admin/orders')">
+      <div class="stat-icon icon-orders">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-number">{{ totalOrders }}</span>
+        <span class="stat-label">Đơn hàng</span>
+      </div>
+    </div>
+
+    <div class="stat-card card-products" (click)="goTo('/admin/products')">
+      <div class="stat-icon icon-products">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-number">{{ totalProducts }}</span>
+        <span class="stat-label">Sản phẩm</span>
+      </div>
+    </div>
+
+    <div class="stat-card card-revenue" (click)="goTo('/admin/orders')">
+      <div class="stat-icon icon-revenue">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+      </div>
+      <div class="stat-info">
+        <span class="stat-number">{{ formatCurrency(revenue) }}</span>
+        <span class="stat-label">Doanh thu</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Panels: Activities + Quick Actions -->
+  <section class="panels">
+    <div class="panel panel-activities">
+      <div class="panel-head">
+        <h3>Hoạt động gần đây</h3>
+      </div>
+      <ul class="activity-list">
+        <li *ngFor="let a of activities" class="activity-item">
+          <div class="activity-dot"></div>
+          <div class="activity-body">
+            <span class="activity-desc">{{ a.description }}</span>
+            <span class="activity-time">{{ a.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+        </li>
+        <li *ngIf="!activities || activities.length === 0" class="activity-empty">
+          Chưa có hoạt động nào
+        </li>
+      </ul>
+    </div>
+
+    <div class="panel panel-actions">
+      <div class="panel-head">
+        <h3>Thao tác nhanh</h3>
+      </div>
+      <div class="quick-actions">
+        <button class="quick-action-btn" (click)="goTo('/admin/products')">
+          <span class="qa-icon">🛍️</span>
+          <span class="qa-label">Thêm sản phẩm</span>
+        </button>
+        <button class="quick-action-btn" (click)="goTo('/admin/orders')">
+          <span class="qa-icon">📦</span>
+          <span class="qa-label">Quản lý đơn hàng</span>
+        </button>
+        <button class="quick-action-btn" (click)="goTo('/admin/users')">
+          <span class="qa-icon">👤</span>
+          <span class="qa-label">Quản lý tài khoản</span>
+        </button>
+        <button class="quick-action-btn" (click)="goTo('/admin/blogs')">
+          <span class="qa-icon">📝</span>
+          <span class="qa-label">Viết blog mới</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Orders Table -->
+  <section class="panel panel-orders">
+    <div class="panel-head">
+      <h3>Đơn hàng gần đây</h3>
+      <button class="view-all-btn" (click)="goTo('/admin/orders')">Xem tất cả →</button>
+    </div>
+    <div class="table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let o of recentOrders">
+            <td class="order-id">{{ (o._id || o.id || o.orderId) | slice:-8 }}</td>
+            <td>{{ o.userName || o.customer || (o.user && o.user.profileName) || '—' }}</td>
+            <td class="order-total">{{ formatCurrency(o.totalPrice || o.total || 0) }}</td>
+            <td><span class="status-badge" [ngClass]="statusClass(o.status)">{{ o.status }}</span></td>
+          </tr>
+          <tr *ngIf="!recentOrders || recentOrders.length === 0">
+            <td colspan="4" class="empty-row">Chưa có đơn hàng nào</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</div>

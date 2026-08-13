@@ -1,0 +1,100 @@
+:host {
+  display: block;
+}
+
+.address-shell {
+  padding-top: 24px;
+}
+
+.address-header h1 {
+  margin: 0;
+  color: #6D1620;
+  font-size: 34px;
+}
+
+.address-header p {
+  margin: 8px 0 0;
+  color: #6f5d50;
+}
+
+.address-card {
+  margin-top: 18px;
+  background: #fff;
+  border: 1px solid rgba(169, 64, 83, 0.18);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 10px 22px rgba(74, 40, 28, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.line {
+  color: #3d2a21;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #5f3f33;
+  font-weight: 600;
+}
+
+input,
+select {
+  border: 1px solid #e8d8c8;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #36231a;
+  background: #fffcf9;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #b35773;
+  box-shadow: 0 0 0 3px rgba(179, 87, 115, 0.12);
+}
+
+/* Dropdown Tỉnh/Quận/Phường */
+.address-select {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.actions {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+button {
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.primary {
+  border: none;
+  background: linear-gradient(120deg, #8b2f3f, #b35773);
+  color: #fff;
+}
+
+.ghost {
+  border: 1px solid #f4c4d4;
+  background: #fff8fb;
+  color: #8b2f3f;
+}
+
+.ghost:hover {
+  background: #fdf0f6;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

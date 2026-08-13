@@ -1,0 +1,1 @@
+declare module '@angular/ssr/fesm2022/ssr.mjs';

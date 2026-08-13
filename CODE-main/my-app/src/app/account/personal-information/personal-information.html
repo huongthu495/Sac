@@ -1,0 +1,81 @@
+<section class="profile-shell">
+  <header class="profile-header">
+    <h1>Thông tin tài khoản</h1>
+    <p>Cập nhật hồ sơ để đặt hàng nhanh hơn và chính xác hơn.</p>
+  </header>
+
+  <div class="profile-card">
+    <div class="identity">
+      <ng-container *ngIf="hasCustomAvatar; else defaultAvatar">
+        <div class="avatar-wrapper has-custom">
+          <img [src]="form.avatar || '/assets/user.png'" alt="Avatar" class="avatar" />
+        </div>
+      </ng-container>
+      <ng-template #defaultAvatar>
+        <div class="avatar-wrapper">
+          <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 20c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </ng-template>
+      <div>
+        <h2>{{ form.profileName || 'Khách hàng' }}</h2>
+        <span>{{ form.email || 'Chưa cập nhật email' }}</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <label>
+        Họ và tên
+        <input [(ngModel)]="form.profileName" name="profileName" />
+      </label>
+
+      <label>
+        Số điện thoại
+        <input [(ngModel)]="form.phone" name="phone" />
+      </label>
+
+      <label>
+        Email
+        <input [(ngModel)]="form.email" name="email" type="email" />
+      </label>
+
+      <label>
+        Giới tính
+        <select [(ngModel)]="form.gender" name="gender">
+          <option value="male">Nam</option>
+          <option value="female">Nữ</option>
+          <option value="other">Khác</option>
+        </select>
+      </label>
+
+      <label>
+        Ngày sinh
+        <input [(ngModel)]="form.birthDay" name="birthDay" type="number" min="1" max="31" />
+      </label>
+
+      <label>
+        Tháng sinh
+        <input
+          [(ngModel)]="form.birthMonth"
+          name="birthMonth"
+          type="number"
+          min="1"
+          max="12"
+        />
+      </label>
+
+      <label>
+        Năm sinh
+        <input [(ngModel)]="form.birthYear" name="birthYear" type="number" min="1900" max="2100" />
+      </label>
+    </div>
+
+    <div class="actions">
+      <button (click)="saveProfile()" [disabled]="isSaving">
+        {{ isSaving ? 'Đang lưu...' : 'Lưu thông tin' }}
+      </button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,99 @@
+<section class="support-section">
+  <div class="container">
+    <!-- Section Header -->
+    <div class="section-header">
+      <h2 class="section-title">HỖ TRỢ KHÁCH HÀNG</h2>
+      <p class="section-description">
+        <strong>Sắc</strong> tin rằng tà áo đẹp nhất là khi bạn mặc nó với sự thoải mái và tự tin. Nếu có bất kỳ điều gì chưa vừa ý, đừng ngần ngại nhắn tụi mình, vì hỗ trợ bạn cũng là cách tụi mình hoàn thiện hơn mỗi ngày.
+      </p>
+    </div>
+
+    <!-- Accordion -->
+    <div class="accordion-wrapper" [class.no-animate]="skipAnimation">
+      <div
+        *ngFor="let support of supportItems; let i = index"
+        class="accordion-item"
+        [attr.id]="'support-tab-' + support.id"
+        [class.expanded]="support.isExpanded"
+      >
+        <!-- Accordion Header -->
+        <div class="accordion-header" (click)="toggleAccordion(support.id)">
+          <div class="header-left">
+            <div class="support-icon">
+              <img [src]="support.iconPath" [alt]="support.title" />
+            </div>
+            <h3 class="support-title">{{ support.title }}</h3>
+          </div>
+          <button class="accordion-toggle" [class.rotate]="support.isExpanded">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 9L12 15L18 9"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Accordion Content -->
+        <div class="accordion-content" [class.show]="support.isExpanded">
+          <div class="accordion-body" [innerHTML]="support.content" *ngIf="support.id !== 1"></div>
+
+          <!-- FAQ Accordion for support item 1 -->
+          <div class="accordion-body" *ngIf="support.id === 1">
+            <div class="faq-accordion">
+              <div
+                class="faq-accordion-item"
+                *ngFor="let faq of faqItems; let i = index"
+                [class.expanded]="faq.isExpanded"
+              >
+                <div class="faq-question" (click)="toggleFAQ(faq.id)">
+                  <div class="faq-plus" [class.rotate]="faq.isExpanded">+</div>
+                  <h4>{{ faq.question }}</h4>
+                </div>
+                <div class="faq-answer" [class.show]="faq.isExpanded">
+                  <div [innerHTML]="faq.answer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="cta-support">
+      <div class="cta-support__icon"></div>
+      <h3 class="cta-support__title">Bạn cần thêm hỗ trợ?</h3>
+      <p class="cta-support__desc">Nếu bạn gặp khó khăn trong quá trình mua hàng hoặc cần tư vấn thêm, hãy liên hệ với chúng tôi để được hỗ trợ nhanh chóng.</p>
+      <button routerLink="/contact" class="cta-support__btn">Liên hệ để nhận sự hỗ trợ</button>
+    </div>
+  </div>
+</section>
+
+<!-- Popup Notification -->
+<div class="popup-overlay" *ngIf="showPopup" (click)="closePopup()">
+  <div class="popup-container" [class.success]="popupType === 'success'" [class.error]="popupType === 'error'" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <div class="popup-icon-wrapper">
+        <div class="popup-icon" [class.success-icon]="popupType === 'success'" [class.error-icon]="popupType === 'error'">
+          <span *ngIf="popupType === 'success'">✓</span>
+          <span *ngIf="popupType === 'error'">✕</span>
+        </div>
+      </div>
+      <button class="popup-close-btn" (click)="closePopup()" aria-label="Đóng">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="popup-body">
+      <h3 class="popup-title" *ngIf="popupType === 'success'">Thành công!</h3>
+      <h3 class="popup-title" *ngIf="popupType === 'error'">Có lỗi xảy ra</h3>
+      <p class="popup-message">{{ popupMessage }}</p>
+    </div>
+    <div class="popup-footer">
+      <button class="popup-close" (click)="closePopup()">Đóng</button>
+    </div>
+  </div>
+</div>
